@@ -82,25 +82,25 @@ class Camera:
 
             if self.keys.get(glfw.KEY_W, False):
                 front = self.camera_front.copy()
-                front[1] = 0 #nao voar
+                front[1] = 0
                 front = front / np.linalg.norm(front)
                 move_direction += front
 
             if self.keys.get(glfw.KEY_S, False):
                 front = self.camera_front.copy()
-                front[1] = 0 #nao voar
+                front[1] = 0
                 front = front / np.linalg.norm(front)
                 move_direction -= front
 
             if self.keys.get(glfw.KEY_A, False):
                 right = np.cross(self.camera_front, self.camera_up)
-                right[1] = 0 #nao voar
+                right[1] = 0
                 right = right / np.linalg.norm(right)
                 move_direction -= right
 
             if self.keys.get(glfw.KEY_D, False):
                 right = np.cross(self.camera_front, self.camera_up)
-                right[1] = 0 #nao voar
+                right[1] = 0
                 right = right / np.linalg.norm(right)
                 move_direction += right
 

@@ -6,6 +6,7 @@ from camera import Camera
 from quarto import Quarto
 from ventilador import Ventilador
 from textura import Textura
+from loadObjs import LoadObjs
 
 
 def main():
@@ -18,7 +19,6 @@ def main():
         glfw.terminate()
         return
 
-
     glfw.make_context_current(window)
     camera = Camera(width, height)
     quarto = Quarto()
@@ -29,29 +29,23 @@ def main():
 
     glEnable(GL_DEPTH_TEST)
 
-    # Configuração de iluminação como no primeiro código
     glEnable(GL_COLOR_MATERIAL)
     glEnable(GL_LIGHTING)
     glEnable(GL_DEPTH_TEST)
     glShadeModel(GL_SMOOTH)
     glEnable(GL_NORMALIZE)
 
-    # Material specular para todos os objetos
     glMaterialfv(GL_FRONT, GL_SPECULAR, [0.1, 0.1, 0.1, 1])
 
-    # Luz ambiente global (mais clara que no segundo código)
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, [0.8, 0.8, 0.8, 1])
 
-    # Luz principal (LIGHT0) - similar ao primeiro código
     glEnable(GL_LIGHT0)
     glLightfv(GL_LIGHT0, GL_SPECULAR, [0.7, 0.7, 0.7, 1])
     glLightfv(GL_LIGHT0, GL_DIFFUSE, [0.3, 0.3, 0.3, 1])
     glLightfv(GL_LIGHT0, GL_POSITION, [0, 7, 0, 1])  # Posição no teto
 
-    # Configuração de materiais
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE)
 
-    # Configura o tempo para cálculo de movimento suave
     last_time = glfw.get_time()
 
     def framebuffer_size_callback(window, new_width, new_height):
@@ -72,15 +66,15 @@ def main():
         delta_time = current_time - last_time
         last_time = current_time
 
-        # Verifica tecla P para a porta
+        # tecla p - porta
         if glfw.get_key(window, glfw.KEY_P) == glfw.PRESS:
             quarto.toggle_door()
 
-        # Verifica tecla V para o ventilador
+        # tecla v - ventilador
         if glfw.get_key(window, glfw.KEY_V) == glfw.PRESS:
             quarto.fan.toggle()
 
-        # Verifica tecla L para a luz
+        # tecla l - luz
         if glfw.get_key(window, glfw.KEY_L) == glfw.PRESS:
             quarto.fan.toggle_light()
 

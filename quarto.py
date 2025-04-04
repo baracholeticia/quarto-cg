@@ -12,7 +12,7 @@ class Quarto:
         self.door_width = 1.0
         self.door_height = 2.25
         self.door_thickness = 0.05
-        self.door_pos_x = -self.door_width/2  # Posição X ajustada para centralizar
+        self.door_pos_x = -self.door_width/2
         self.wall_thickness = 0.2
 
         self.floor_color = (0.5, 0.4, 0.3)
@@ -74,35 +74,32 @@ class Quarto:
     def draw_walls(self):
         tex_coords = [(0, 0), (1, 0), (1, 1), (0, 1)]
 
-        # Parede traseira (z = depth/2) com abertura para porta
-        # Parte esquerda da parede
-        vertices_left_wall = [
+        # parede de tras
+        vertices_back_left = [
             (-self.width / 2, 0.0, self.depth / 2),
             (self.door_pos_x, 0.0, self.depth / 2),
             (self.door_pos_x, self.height, self.depth / 2),
             (-self.width / 2, self.height, self.depth / 2)
         ]
-        self.draw_textured('wall', vertices_left_wall, tex_coords, self.wall_color)
+        self.draw_textured('wall', vertices_back_left, tex_coords, self.wall_color)
 
-        # Parte direita da parede
-        vertices_right_wall = [
+        vertices_back_right = [
             (self.door_pos_x + self.door_width, 0.0, self.depth / 2),
             (self.width / 2, 0.0, self.depth / 2),
             (self.width / 2, self.height, self.depth / 2),
             (self.door_pos_x + self.door_width, self.height, self.depth / 2)
         ]
-        self.draw_textured('wall', vertices_right_wall, tex_coords, self.wall_color)
+        self.draw_textured('wall', vertices_back_right, tex_coords, self.wall_color)
 
-        # Parte superior da parede (acima da porta)
-        vertices_top_wall = [
+        vertices_back_top = [
             (self.door_pos_x, self.door_height, self.depth / 2),
             (self.door_pos_x + self.door_width, self.door_height, self.depth / 2),
             (self.door_pos_x + self.door_width, self.height, self.depth / 2),
             (self.door_pos_x, self.height, self.depth / 2)
         ]
-        self.draw_textured('wall', vertices_top_wall, tex_coords, self.wall_color)
+        self.draw_textured('wall', vertices_back_top, tex_coords, self.wall_color)
 
-        # Parede frontal (z = -depth/2)
+        # parede da frente
         vertices_front = [
             (-self.width / 2, 0.0, -self.depth / 2),
             (self.width / 2, 0.0, -self.depth / 2),
@@ -111,7 +108,7 @@ class Quarto:
         ]
         self.draw_textured('wall', vertices_front, tex_coords, self.wall_color)
 
-        # Parede esquerda (x = -width/2)
+        # parede esquerda
         vertices_left = [
             (-self.width / 2, 0.0, -self.depth / 2),
             (-self.width / 2, 0.0, self.depth / 2),
@@ -120,7 +117,7 @@ class Quarto:
         ]
         self.draw_textured('wall', vertices_left, tex_coords, self.wall_color)
 
-        # Parede direita (x = width/2)
+        # parede direita
         vertices_right = [
             (self.width / 2, 0.0, -self.depth / 2),
             (self.width / 2, 0.0, self.depth / 2),
@@ -131,7 +128,7 @@ class Quarto:
 
     def draw_door(self):
         glPushMatrix()
-        # Posição da porta - agora alinhada com a abertura na parede
+
         glTranslatef(self.door_pos_x + self.door_width, 0, self.depth / 2 - self.door_thickness)
         glRotatef(-self.door_angle, 0, 1, 0)
         glTranslate(-self.door_width, 0, 0)
@@ -145,31 +142,31 @@ class Quarto:
             glColor3f(*self.door_color)
 
         glBegin(GL_QUADS)
-        # Frente
+
+        # frente
         glTexCoord2f(0, 0); glVertex3f(0, 0, 0)
         glTexCoord2f(1, 0); glVertex3f(self.door_width, 0, 0)
         glTexCoord2f(1, 1); glVertex3f(self.door_width, self.door_height, 0)
         glTexCoord2f(0, 1); glVertex3f(0, self.door_height, 0)
 
-        # Trás
+        # tras
         glTexCoord2f(0, 0); glVertex3f(0, 0, -self.door_thickness)
         glTexCoord2f(1, 0); glVertex3f(self.door_width, 0, -self.door_thickness)
         glTexCoord2f(1, 1); glVertex3f(self.door_width, self.door_height, -self.door_thickness)
         glTexCoord2f(0, 1); glVertex3f(0, self.door_height, -self.door_thickness)
 
-        # Lados
         glColor3f(0.3, 0.2, 0.1)
-        # Lado direito
+        # lado direito
         glVertex3f(self.door_width, 0, 0)
         glVertex3f(self.door_width, self.door_height, 0)
         glVertex3f(self.door_width, self.door_height, -self.door_thickness)
         glVertex3f(self.door_width, 0, -self.door_thickness)
-        # Lado esquerdo
+        # lado esquerdo
         glVertex3f(0, 0, 0)
         glVertex3f(0, self.door_height, 0)
         glVertex3f(0, self.door_height, -self.door_thickness)
         glVertex3f(0, 0, -self.door_thickness)
-        # Topo
+        # cima
         glVertex3f(0, self.door_height, 0)
         glVertex3f(self.door_width, self.door_height, 0)
         glVertex3f(self.door_width, self.door_height, -self.door_thickness)
