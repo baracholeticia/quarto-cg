@@ -132,8 +132,9 @@ class Quarto:
     def draw_door(self):
         glPushMatrix()
         # Posição da porta - agora alinhada com a abertura na parede
-        glTranslatef(self.door_pos_x, 0, self.depth / 2 - self.door_thickness)
-        glRotatef(self.door_angle, 0, 1, 0)
+        glTranslatef(self.door_pos_x + self.door_width, 0, self.depth / 2 - self.door_thickness)
+        glRotatef(-self.door_angle, 0, 1, 0)
+        glTranslate(-self.door_width, 0, 0)
 
         if self.textures.get('door'):
             glEnable(GL_TEXTURE_2D)
